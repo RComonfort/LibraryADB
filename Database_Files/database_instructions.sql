@@ -26,7 +26,7 @@ CREATE TABLE loans(
 	clientID INT REFERENCES clients(clientID) NOT NULL,
 	loan_date DATE NOT NULL,
 	return_date DATE,
-	librarianID INT REFERENCES clients(cliID) NOT NULL,
+	librarianID INT REFERENCES librarians(librarianID) NOT NULL,
 	PRIMARY KEY (loanID)
 );
 
@@ -38,12 +38,12 @@ CREATE TABLE fines(
 	PRIMARY KEY (fineID)
 );
 
-DROP TABLE IF EXISTS returns;
+DROP TABLE IF EXISTS breturns;
 CREATE TABLE breturns(
 	returnID SERIAL,
 	loanID INT REFERENCES loans(loanID) NOT NULL,
 	actual_return_date DATE NOT NULL,
-	fineID INT REFERENCES finess(fineID),
+	fineID INT REFERENCES fines(fineID),
 	PRIMARY KEY (returnID)
 );
 
@@ -113,7 +113,7 @@ CREATE TABLE books_loans(
 #			          	Insertions					  #
 ######################################################
 
-INSERT INTO editorials (name, countryID) VALUES ('Oxford University Press', 'GBR'), ('Bantam Spectra', 'USA'), ('DAW Books', 'USA'), ('Ballantine Books', 'USA');
+INSERT INTO editorials (name, nationality) VALUES ('Oxford University Press', 'GBR'), ('Bantam Spectra', 'USA'), ('DAW Books', 'USA'), ('Ballantine Books', 'USA');
 
 INSERT INTO books (title, editorialID, edition, translator, language, daily_fine_amount, stock, pages, publishing_date) VALUES ('A Pattern Language', 1, 1, NULL, 'En', 34.99, 3, 1171, '1977-01-01'),('A Game of Thrones', 2, 5, NULL, 'En', 50.00, 15, 694, '1996-08-01'),('A Clash of Kings', 2, 5, NULL, 'En', 55.00, 17, 768, '1998-01-01'),('A Storm of Swords', 2, 4, NULL, 'En', 60.00, 20, 973, '2000-01-01'),('A Feast for Crows', 2, 3, NULL, 'En', 40.00, 7, 976, '2005-01-01'), ('A Dance with Dragons', 2, 2, NULL, 'En', 40.00, 7, 1040, '2011-07-12'),('The Name of The Wind', 3, 2, NULL, 'En', 50.00, 15, 662, '2007-03-27'),('Farenheit 451', 4, 10, NULL, 'En', 55.50, 20, 358, '1953-01-01');
 
@@ -129,7 +129,7 @@ INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, '20
 
 INSERT INTO books_loans (bookID, loanID) VALUES (2, 1), (3, 1), (4, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2);
 
-INSERT INTO fines ( loandID, totalAmount) VALUES (2, 735.00);
+INSERT INTO fines ( loanID, total_amount) VALUES (2, 735.00);
 
 INSERT INTO breturns (loanID, actual_return_date, fineID) VALUES (2, '2018-02-28', 1);
 
@@ -151,19 +151,18 @@ CREATE OR REPLACE FUNCTION FinePerBook(bookI INT, returnDate DATE)
         finePerBook:= bookFine * (CURRENT_DATE - returnDate);
         RETURN  finePerBook;
     END;
-$finePerBook$ LANGUAGE plpsql;
+$finePerBook$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION CalculateTotalFine (INT loanID)
+CREATE OR REPLACE FUNCTION CalculateTotalFine (lID INT)
 RETURNS NUMERIC (10, 2) AS $total$ 
 DECLARE 
 	total NUMERIC (10, 2);
 	originalReturnDate DATE;
 BEGIN
-	SELECT return_date INTO originalReturnDate,  
-	FROM loans l WHERE l.loanID = loanID;
+	SELECT return_date INTO originalReturnDate  
+	FROM loans l WHERE l.loanID = lID;
 
-	SELECT SUM(FinePerBook(b.bookID, originalReturnDate)) INTO total FROM books b 
-	WHERE books b INNER JOIN books_loans bl ON bl.loanID = loanID;
+	SELECT SUM(FinePerBook(b.bookID, originalReturnDate)) INTO total FROM books b INNER JOIN books_loans bl ON bl.loanID = lID;
 
 	RETURN total;
 END;
@@ -171,7 +170,7 @@ $total$ LANGUAGE plpgsql;
 
 ####### TRIGGERS  #######
 
-CREATE OR REPLACE TRIGGER  after_insert_breturns  AFTER INSERT ON breturns FOR EACH ROW
+CREATE TRIGGER  after_insert_breturns  AFTER INSERT ON breturns FOR EACH ROW
 EXECUTE PROCEDURE DoFine();
 
 ####### STORED PROCEDURES  #######
@@ -182,17 +181,17 @@ CREATE OR REPLACE FUNCTION DoFine()
         return_date_loan DATE;
         new_fineID INT;
     BEGIN
-        SELECT loans.return_date INTO return_date_loan
-        FROM loans
-        WHERE loans.loanID = NEW.loanID;
-        IF return_date_loan > NEW.actual_return_date THEN 
-                SELECT CreateFine(NEW.loanID) INTO new_fineID;
-                NEW.fineID:=new_fineID;
+        SELECT loans.return_date INTO return_date_loan FROM loans WHERE loans.loanID = NEW.loanID;
+        IF (return_date_loan-NEW.actual_return_date) > 0 THEN 
+            SELECT CreateFine(NEW.loanID) INTO new_fineID;
+            NEW.fineID:=new_fineID;
         ELSE 
             NEW.fineID:=NULL;
         END IF;
+
+        RETURN NEW;
     END;
-$finePerBook$ LANGUAGE plpsql;
+$after_insert_breturns$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION CreateFine(loID INT)
     RETURNS INT AS $fID$
@@ -200,9 +199,9 @@ CREATE OR REPLACE FUNCTION CreateFine(loID INT)
         fID INT;
         amount NUMERIC(10,2);
     BEGIN
-        SELECT GetFineAmount(loanID) INTO amount;
+        SELECT CalculateTotalFine(loanID) INTO amount;
         INSERT INTO fines (loanID, total_amount) VALUES (loID, amount) RETURNING fineID INTO fID;
         RETURN fID;    
     END;
-$fID$ LANGUAGE plpsql;
+$fID$ LANGUAGE plpgsql;
 
