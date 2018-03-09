@@ -133,8 +133,6 @@ INSERT INTO fines ( loanID, total_amount) VALUES (2, 735.00);
 
 INSERT INTO breturns (loanID, actual_return_date, fineID) VALUES (2, '2018-02-28', 1);
 
-
-
 ######################################################
 #			          	STORED PROGRAMS				 #
 ######################################################
@@ -182,7 +180,7 @@ CREATE OR REPLACE FUNCTION DoFine()
         new_fineID INT;
     BEGIN
         SELECT loans.return_date INTO return_date_loan FROM loans WHERE loans.loanID = NEW.loanID;
-        IF (return_date_loan-NEW.actual_return_date) > 0 THEN 
+        IF return_date_loan < NEW.actual_return_date THEN 
             SELECT CreateFine(NEW.loanID) INTO new_fineID;
             NEW.fineID:=new_fineID;
         ELSE 
@@ -199,9 +197,47 @@ CREATE OR REPLACE FUNCTION CreateFine(loID INT)
         fID INT;
         amount NUMERIC(10,2);
     BEGIN
-        SELECT CalculateTotalFine(loanID) INTO amount;
+        SELECT CalculateTotalFine(loID) INTO amount;
         INSERT INTO fines (loanID, total_amount) VALUES (loID, amount) RETURNING fineID INTO fID;
         RETURN fID;    
     END;
 $fID$ LANGUAGE plpgsql;
 
+####### Transaction  #######
+
+CREATE OR REPLACE FUNCTION LoanBook(loID INT, boID INT)
+    RETURNS VOID AS $$
+    DECLARE
+        book_stock INT;
+    BEGIN
+    	LOCK TABLE books IN ACCESS EXCLUSIVE MODE;
+        SELECT books.stock INTO book_stock
+        FROM books
+        WHERE books.bookID = boID;
+        IF book_stock > 0 THEN
+        	INSERT INTO books_loans(bookID, loanID) VALUES (boID, loID);
+        	UPDATE books SET stock = (stock - 1) WHERE books.bookID = boID;
+        ELSE
+        	ROLLBACK;
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+####### VIEWS  #######
+
+CREATE VIEW allBooks AS
+SELECT *
+FROM books;
+
+
+####### QUERIES  #######
+
+SELECT b.title, a.name AS Author_Name
+FROM authors a INNER JOIN (books b INNER JOIN authors_books ab ON b.bookID=ab.bookID) ON a.authorID=ab.authorID;
+
+SELECT name, address, telephone
+FROM clients
+UNION
+SELECT name, address, telephone
+FROM librarians;
