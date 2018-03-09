@@ -125,9 +125,9 @@ INSERT INTO clients (name, telephone, address, email, debt) VALUES ('Angel Bob M
 
 INSERT INTO librarians (name, telephone, address, shift_begin, shift_end) VALUES ('Pepe Toño Pantufla', '22245453467', 'Evergreen Terrace Road 48', '07:00:00', '20:00:00'), ('Daniel P. Irri', '22245453667', NULL, '20:00:01', '06:00:59');
 
-INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, '2018-03-01', '2018-03-08', 1), (2, '2018-02-18', '2018-02-25', 2);
+INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, '2018-03-01', '2018-03-08', 1), (2, '2018-02-18', '2018-02-25', 2), (1, '2018-03-01', '2018-03-08', 1);
 
-INSERT INTO books_loans (bookID, loanID) VALUES (2, 1), (3, 1), (4, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2);
+INSERT INTO books_loans (bookID, loanID) VALUES (2, 1), (3, 1), (4, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (8,3);
 
 INSERT INTO fines ( loanID, total_amount) VALUES (2, 735.00);
 
@@ -160,7 +160,7 @@ BEGIN
 	SELECT return_date INTO originalReturnDate  
 	FROM loans l WHERE l.loanID = lID;
 
-	SELECT SUM(FinePerBook(b.bookID, originalReturnDate)) INTO total FROM books b INNER JOIN books_loans bl ON bl.loanID = lID;
+	SELECT SUM(FinePerBook(bl.bookID, originalReturnDate)) INTO total FROM books_loans bl WHERE bl.loanID = lID;
 
 	RETURN total;
 END;
