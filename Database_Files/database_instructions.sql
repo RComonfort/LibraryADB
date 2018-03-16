@@ -139,6 +139,19 @@ INSERT INTO breturns (loanID, actual_return_date, fineID) VALUES (2, '2018-02-28
 
 ####### FUNCTIONS #######
 
+--Adds 7 to the given date, which is the default amount of days that any book is borrowed
+
+CREATE OR REPLACE FUNCTION CalculateReturnDate (loan_date DATE)
+	RETURN DATE AS $return_date$
+	DECLARE
+		return_date DATE;
+	BEGIN
+		SELECT loan_date + INTEGER '7' INTO return_date;
+		RETURN return_date;
+	END;
+$return_date$ LANGUAGE plpgsql;
+	
+
 CREATE OR REPLACE FUNCTION FinePerBook(bookI INT, returnDate DATE)
     RETURNS NUMERIC(10,2) AS $finePerBook$
     DECLARE
