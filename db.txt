@@ -1,0 +1,23 @@
+
+CREATE SEQUENCE user_id_seq;
+
+DROP TABLE IF EXISTS "users";
+CREATE TABLE "users" (
+"id" int4 DEFAULT nextval('user_id_seq') NOT NULL,
+"username" varchar(100) COLLATE "default",
+"password" varchar(100) COLLATE "default",
+"created_at" date DEFAULT ('now'::text)::date NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER SEQUENCE user_id_seq RESTART WITH 1;
+
+
+
+
+
+https://www.uno-de-piera.com/crud-con-php-y-postgresql/
+
+
+
+
