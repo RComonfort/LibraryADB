@@ -101,6 +101,9 @@
 
 		public function delete(){
             try{
+				$quert = $this->con->prepare('DELETE FROM books_loans WHERE loanID = ?');
+				$quey ->bindParam(1, $this->loanID, PDO::PARAM_INT);
+				$query->execute();
                 $query = $this->con->prepare('DELETE FROM loans WHERE loanID = ?');
                 $query->bindParam(1, $this->loanID, PDO::PARAM_INT);
                 $query->execute();
