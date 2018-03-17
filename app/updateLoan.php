@@ -21,7 +21,7 @@
 
 	$db = new Database;
 	$loan = new Loan($db);
-	$loan->setId($post->loanID);
+	$loan->setLoanID($post->loanID);
 	$loan->setLoan_date($post->loan_date);
 	$loan->setReturn_date($post->return_date);
 	$loan->update();

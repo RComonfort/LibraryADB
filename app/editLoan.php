@@ -34,7 +34,7 @@
         }
         $db = new Database;
         $newLoan = new Loan($db);
-        $newLoan->setId($id);
+        $newLoan->setLoanID($id);
         $loan = $newLoan->get();
         $newLoan->checkLoan($loan);
     ?>

@@ -8,7 +8,7 @@
 	$loanID = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
 
 	if( $loanID ){
-		$loan->setId($loanID);
+		$loan->setLoanID($loanID);
 		$loan->delete();
 	}
 	header("Location:" . Loan::baseurl() . "app/listLoans.php");
