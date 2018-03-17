@@ -31,6 +31,16 @@
 			$this -> librarianID = $librarianID;
 		}
 
+		public function setLoan_date($loan_date)
+		{
+			$this -> loan_date = $loan_date;
+		}
+
+		public function setReturn_date($return_date)
+		{
+			$this -> return_date = $return_date;
+		}
+
 		public function save()
 		{
 			try {
