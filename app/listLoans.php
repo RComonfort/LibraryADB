@@ -100,10 +100,10 @@
                             {
                             ?>
                             <tr>
-                                <td><?php echo $loan->loanID ?></td>
+                                <td><?php echo $loan->loanid ?></td>
                                 <td><?php echo $loan->return_date ?></td>
-                                <td><?php echo $loan->clientID ?></td>
-                                <td><?php echo $loan->bookCount ?></td>
+                                <td><?php echo $loan->clientid ?></td>
+                                <td><?php echo $loan->bookcount ?></td>
                                 <td><?php echo $loan->return_date ?></td>
                                 <td>
                                     <a class="btn btn-info" href="<?php echo User::baseurl() ?>app/editLoan.php?user=<?php echo $loan->loanID ?>">Edit</a> 
