@@ -216,6 +216,14 @@ CREATE OR REPLACE FUNCTION CreateFine(loID INT)
     END;
 $fID$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION DeleteLoan(loID INT)
+    RETURNS VOID AS $$
+    BEGIN
+        DELETE FROM books_loans WHERE loanID = loID;
+		DELETE FROM loans WHERE loanID = loID;
+    END;
+$$ LANGUAGE plpgsql;
+
 ####### Transaction  #######
 
 CREATE OR REPLACE FUNCTION LoanBook(loID INT, boID INT)
