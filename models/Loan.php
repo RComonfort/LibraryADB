@@ -106,9 +106,9 @@
 			return stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . "/LibraryADB/";
 	   	}
 
-	   public function checkBook($user) {
-		   if( ! $user ) {
-			   header("Location:" . User::baseurl() . "app/listLoans.php");
+	   public function checkLoan($loan) {
+		   if( ! $loan ) {
+			   header("Location:" . Loan::baseurl() . "app/listLoans.php");
 		   }
 	   }
 	}
