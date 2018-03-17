@@ -50,9 +50,9 @@
 		public function update()
 		{
 			try {
-				$query = $this -> con -> prepare('UPDATE loans SET clientID = ?, librarianID = ? WHERE loanID = ?');
-				$query -> bindParam(1, $this -> clientID, PDO::PARAM_INT);
-				$query -> bindParam(2, $this -> librarianID, PDO::PARAM_INT);
+				$query = $this -> con -> prepare('UPDATE loans SET loan_date = ?, return_date = ? WHERE loanID = ?');
+				$query -> bindParam(1, $this -> loan_date, PDO::PARAM_INT);
+				$query -> bindParam(2, $this -> return_date, PDO::PARAM_INT);
 				$query -> bindParam(3, $this -> loanID, PDO::PARAM_INT);
 				$query -> execute();
 
@@ -108,7 +108,7 @@
 
 	   public function checkBook($user) {
 		   if( ! $user ) {
-			   header("Location:" . User::baseurl() . "app/list.php");
+			   header("Location:" . User::baseurl() . "app/listLoans.php");
 		   }
 	   }
 	}

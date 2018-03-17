@@ -20,14 +20,23 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 </head>
 
+ error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
 <body>
     <?php
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         require_once "../models/Loan.php";
+        $loanID = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
+        if( ! $loanID ){
+            header("Location:" . Loan::baseurl() . "app/listLoans.php");
+        }
         $db = new Database;
-        $loan = new Loan($db);
-        $loans = $loan->get();        
+        $newLoan = new User($db);
+        $newLoan->setId($id);
+        $loan = $newLoan->get();
+        $newLoan->checkUser($loan);
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
@@ -81,50 +90,19 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Loans List</h2>
-                        <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
-                            <a class="btn btn-info" href="<?php echo Loan::baseurl() ?>/app/add.php">Add loan</a>
-                        </div>
-                        <?php
-                            if( ! empty( $loans ) ) {
-                        ?>
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th>Loan Id</th>
-                                <th>Loan Date</th>
-                                <th>Client Id</th>
-                                <th>Number of books</th>
-                                <th>Return date</th>
-                            </thead>
-                            <tbody>
-                                <?php foreach( $loans as $loan )
-                                {
-                                ?>
-                                <tr>
-                                    <td><?php echo $loan->loanid ?></td>
-                                    <td><?php echo $loan->return_date ?></td>
-                                    <td><?php echo $loan->clientid ?></td>
-                                    <td><?php echo $loan->bookcount ?></td>
-                                    <td><?php echo $loan->return_date ?></td>
-                                    <td>
-                                        <a class="btn btn-primary" href="<?php echo Loan::baseurl() ?>app/editLoan.php?loan=<?php echo $loan->loanid ?>">Edit</a> 
-                                        <a class="btn btn-primary" href="<?php echo Loan::baseurl() ?>app/deleteLoan.php?loan=<?php echo $loan->loanid ?>">Delete</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                }
-                                ?>
-                            <tbody>
-                        </table>
-                        <?php
-                        }
-                        else
-                        {
-                        ?>
-                        <div class="alert alert-danger" style="margin-top: 100px">There are 0 registered users</div>
-                        <?php
-                        }
-                        ?>
+                        <h2 class="text-center text-primary">Edit Loan <?php echo $loan->loanid ?></h2>
+                        <form action="<?php echo Loan::baseurl() ?>app/updateLoan.php" method="POST">
+                            <div class="form-group">
+                                <label for="loan_date">Issue date</label>
+                                <input type="text" name="loan_date" value="<?php echo $loan->loan_date ?>" class="form-control" id="loan_date" placeholder="2018-1-1">
+                            </div>
+                            <div class="form-group">
+                                <label for="return_date">Return date</label>
+                                <input type="return_date" name="return_date" value="<?php echo $loan->return_date ?>" class="form-control" id="return_date" placeholder="2018-1-8">
+                            </div>
+                            <input type="hidden" name="loanID" value="<?php echo $loan->loanid ?>" />
+                            <input type="submit" name="submit" class="btn btn-default" value="Update loan" />
+                        </form>
                     </div>
                 </div>
             </div>
