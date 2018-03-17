@@ -9,7 +9,10 @@
 	
 	if( $loanID ){
 		$loan->setLoanID($loanID);
-		$loan->delete();
+		if($loan->delete()){
+			echo "Matenme";
+			die;
+		}
 	}
 	header("Location:" . Loan::baseurl() . "app/slpash.html");
 ?>
