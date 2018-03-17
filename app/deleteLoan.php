@@ -4,7 +4,7 @@
 
 	require_once "../models/Loan.php";
 	$db = new Database;
-	$loan = new User($db);
+	$loan = new Loan($db);
 	$loanID = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
 
 	if( $loanID ){

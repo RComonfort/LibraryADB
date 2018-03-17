@@ -121,7 +121,7 @@
                         else
                         {
                         ?>
-                        <div class="alert alert-danger" style="margin-top: 100px">There are 0 registered users</div>
+                        <div class="alert alert-danger" style="margin-top: 100px">There are 0 loans</div>
                         <?php
                         }
                         ?>

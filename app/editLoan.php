@@ -33,10 +33,10 @@
             header("Location:" . Loan::baseurl() . "app/listLoans.php");
         }
         $db = new Database;
-        $newLoan = new User($db);
+        $newLoan = new Loan($db);
         $newLoan->setId($id);
         $loan = $newLoan->get();
-        $newLoan->checkUser($loan);
+        $newLoan->checkLoan($loan);
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
