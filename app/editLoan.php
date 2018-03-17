@@ -20,8 +20,6 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 </head>
 
- error_reporting(E_ALL);
-        ini_set('display_errors', 1);
 
 <body>
     <?php

@@ -11,5 +11,5 @@
 		$loan->setLoanID($loanID);
 		$loan->delete();
 	}
-	header("Location:" . Loan::baseurl() . "app/listLoans.php");
+	header("Location:" . Loan::baseurl() . "app/slpash.html");
 ?>
