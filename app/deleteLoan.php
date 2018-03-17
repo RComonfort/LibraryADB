@@ -6,7 +6,8 @@
 	$db = new Database;
 	$loan = new Loan($db);
 	$loanID = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
-
+	echo $loanID;
+	die;
 	if( $loanID ){
 		$loan->setLoanID($loanID);
 		$loan->delete();

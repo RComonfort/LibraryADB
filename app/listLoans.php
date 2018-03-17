@@ -102,7 +102,7 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $loan->loanid ?></td>
-                                    <td><?php echo $loan->return_date ?></td>
+                                    <td><?php echo $loan->loan_date ?></td>
                                     <td><?php echo $loan->clientid ?></td>
                                     <td><?php echo $loan->bookcount ?></td>
                                     <td><?php echo $loan->return_date ?></td>
