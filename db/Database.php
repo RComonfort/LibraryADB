@@ -9,7 +9,7 @@ class Database extends PDO{
 	//user database
 	private $user 	= "usuario4";
 	//password user
-	private $pass 	= '6iIm75cGJb';
+	private $pass 	= '';
 	//port
 	private $port 	= 5432;
     //instance
@@ -31,4 +31,5 @@ class Database extends PDO{
 	} 
 }
 
+//6iIm75cGJb
 ?>
