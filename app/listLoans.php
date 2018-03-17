@@ -88,31 +88,33 @@
                         <?php
                             if( ! empty( $loans ) ) {
                         ?>
-                        <table class="table table-striped">
-                            <tr>
+                        <table class="table">
+                            <thead class="text-primary">
                                 <th>Loan Id</th>
                                 <th>Loan Date</th>
                                 <th>Client Id</th>
                                 <th>Number of books</th>
                                 <th>Return date</th>
-                            </tr>
-                            <?php foreach( $loans as $loan )
-                            {
-                            ?>
-                            <tr>
-                                <td><?php echo $loan->loanid ?></td>
-                                <td><?php echo $loan->return_date ?></td>
-                                <td><?php echo $loan->clientid ?></td>
-                                <td><?php echo $loan->bookcount ?></td>
-                                <td><?php echo $loan->return_date ?></td>
-                                <td>
-                                    <a class="btn btn-info" href="<?php echo User::baseurl() ?>app/editLoan.php?user=<?php echo $loan->loanID ?>">Edit</a> 
-                                    <a class="btn btn-info" href="<?php echo User::baseurl() ?>app/deleteLoan.php?user=<?php echo $loan->loanID ?>">Delete</a>
-                                </td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach( $loans as $loan )
+                                {
+                                ?>
+                                <tr>
+                                    <td><?php echo $loan->loanid ?></td>
+                                    <td><?php echo $loan->return_date ?></td>
+                                    <td><?php echo $loan->clientid ?></td>
+                                    <td><?php echo $loan->bookcount ?></td>
+                                    <td><?php echo $loan->return_date ?></td>
+                                    <td>
+                                        <a class="btn" href="<?php echo Loan::baseurl() ?>app/editLoan.php?user=<?php echo $loan->loanID ?>">Edit</a> 
+                                        <a class="btn" href="<?php echo Loan::baseurl() ?>app/deleteLoan.php?user=<?php echo $loan->loanID ?>">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                }
+                                ?>
+                            <tbody>
                         </table>
                         <?php
                         }
