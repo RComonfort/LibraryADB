@@ -7,9 +7,9 @@ class Database extends PDO{
 	//host
 	private $host 	= "localhost";
 	//user database
-	private $user 	= "usuario4";
+	private $user 	= "angel";
 	//password user
-	private $pass 	= '';
+	private $pass 	= '123';
 	//port
 	private $port 	= 5432;
     //instance

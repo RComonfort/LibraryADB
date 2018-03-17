@@ -22,7 +22,9 @@
 
 <body>
     <?php
-        require_once "../models/Loans.php";
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        require_once "../models/Loan.php";
         $db = new Database;
         $loan = new Loan($db);
         $loans = $loan->get();        
@@ -141,13 +143,5 @@
 <script src="../assets/js/bootstrap-notify.js"></script>
 <!-- Material Dashboard javascript methods -->
 <script src="../assets/js/material-dashboard.js?v=1.2.0"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-    });
-</script>
 
 </html>
