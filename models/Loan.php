@@ -89,6 +89,19 @@
     	    }
 		}
 
+		public function delete(){
+            try{
+                $query = $this->con->prepare('DELETE FROM loans WHERE loanID = ?');
+                $query->bindParam(1, $this->loanID, PDO::PARAM_INT);
+                $query->execute();
+                $this->con->close();
+                return true;
+            }
+            catch(PDOException $e){
+                echo  $e->getMessage();
+            }
+        }
+
 		public static function baseurl() {
 			return stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . "/LibraryADB/";
 	   	}
