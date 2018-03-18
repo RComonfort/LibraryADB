@@ -81,20 +81,19 @@
 			}
 		}
 
-		public function get($loanID)
+		public function get()
 		{
 			try {
-				if ($loanID > 0)
+				if (is_int($this -> loanID))
 				{
 					$query = $this -> con -> prepare('SELECT b.bookID, b.title FROM books b INNER JOIN books_loans bl ON b.bookID = bl.bookID WHERE bl.loanID = ?');
-					$query -> bindParam (1, $loanID, PDO::PARAM_INT);
+					$query -> bindParam (1, $this->loanID, PDO::PARAM_INT);
 					$query -> execute();
 					$this -> con -> close();
 					return $query -> fetchAll(PDO::FETCH_OBJ);
 				}
 				else{
 					$query = $this -> con -> prepare('SELECT bookID, title FROM books');
-					$query -> bindParam (1, $loanID, PDO::PARAM_INT);
 					$query -> execute();
 					$this -> con -> close();
 					return $query -> fetchAll(PDO::FETCH_OBJ);

@@ -28,7 +28,7 @@
         require_once "../models/Book.php";
         $db = new Database;
         $book = new Book($db);
-        $books = $book->get(0);
+        $books = $book->get();
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
