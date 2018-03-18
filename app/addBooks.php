@@ -47,7 +47,7 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
-                        <a href="./slpash.html">
+                        <a href="./splash.html">
                             <p>Home</p>
                         </a>
                     </li>
@@ -89,9 +89,9 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
                             <div>
-                                <select>
+                                <select type="book" name"book" id="book" >
                                     <?php foreach($books as $book){?>
-                                        <option type="book" name"book" id="book" value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>

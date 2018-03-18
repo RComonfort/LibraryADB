@@ -89,9 +89,9 @@
                                 <input type="text" name="loan_date" value="" class="form-control" id="loan_date" placeholder="2018-1-1">
                             </div>
                             <div>
-                                <select>
+                                <select type="book" name"book" id="book" >
                                     <?php foreach($books as $book){?>
-                                        <option type="book" name"book" id="book" value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>

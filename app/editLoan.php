@@ -113,7 +113,7 @@
                                         <th>Book title</th>
                                     </thead>
                                     <tbody>
-                                        <?php foreach( $lbooks as $book )
+                                        <?php foreach( $books as $book )
                                         {
                                         ?>
                                         <tr>
