@@ -13,8 +13,6 @@
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
     <link href="../assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet" />
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="../assets/css/demo.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -43,7 +41,7 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
-                        <a href="./slpash.html">
+                        <a href="./splash.html">
                             <p>Home</p>
                         </a>
                     </li>
@@ -89,7 +87,7 @@
                                 <input type="text" name="loan_date" value="" class="form-control" id="loan_date" placeholder="2018-1-1">
                             </div>
                             <div>
-                                <select type="book" name"book" id="book" >
+                                <select type="book" name"book" id="book">
                                     <?php foreach($books as $book){?>
                                         <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>

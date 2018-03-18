@@ -22,10 +22,10 @@
     <?php
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-        require_once "../models/Loan.php";
+        require_once "../models/Fine.php";
         $db = new Database;
-        $loan = new Loan($db);
-        $loans = $loan->get();        
+        $fine = new Fine($db);
+        $fines = $fine->get();        
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
@@ -79,35 +79,24 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Loans List</h2>
-                        <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
-                            <a class="btn btn-info" href="<?php echo Loan::baseurl() ?>/app/addLoans.php">Add loan</a>
-                        </div>
+                        <h2 class="text-center text-primary">Fines List</h2>
                         <?php
-                            if( ! empty( $loans ) ) {
+                            if( ! empty( $fines ) ) {
                         ?>
                         <table class="table">
                             <thead class="text-primary">
+                                <th>Fine Id</th>
                                 <th>Loan Id</th>
-                                <th>Loan Date</th>
-                                <th>Client Id</th>
-                                <th>Number of books</th>
-                                <th>Return date</th>
+                                <th>Fine amount</th>
                             </thead>
                             <tbody>
-                                <?php foreach( $loans as $loan )
+                                <?php foreach( $fines as $fine )
                                 {
                                 ?>
                                 <tr>
-                                    <td><?php echo $loan->loanid ?></td>
-                                    <td><?php echo $loan->loan_date ?></td>
-                                    <td><?php echo $loan->clientid ?></td>
-                                    <td><?php echo $loan->bookcount ?></td>
-                                    <td><?php echo $loan->return_date ?></td>
-                                    <td>
-                                        <a class="btn btn-primary" href="<?php echo Loan::baseurl() ?>app/editLoan.php?loan=<?php echo $loan->loanid ?>">Edit</a> 
-                                        <a class="btn btn-primary" href="<?php echo Loan::baseurl() ?>app/deleteLoan.php?loan=<?php echo $loan->loanid ?>">Delete</a>
-                                    </td>
+                                    <td><?php echo $fine->fineid ?></td>
+                                    <td><?php echo $fine->loan_date ?></td>
+                                    <td>$<?php echo $fine->total_amount ?></td>
                                 </tr>
                                 <?php
                                 }
@@ -119,7 +108,7 @@
                         else
                         {
                         ?>
-                        <div class="alert alert-danger" style="margin-top: 100px">There are 0 loans</div>
+                        <div class="alert alert-danger" style="margin-top: 100px">There are 0 fines</div>
                         <?php
                         }
                         ?>

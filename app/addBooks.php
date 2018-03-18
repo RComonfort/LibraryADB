@@ -13,8 +13,6 @@
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
     <link href="../assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet" />
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="../assets/css/demo.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -89,9 +87,9 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
                             <div>
-                                <select type="book" name"book" id="book" >
+                                <select>
                                     <?php foreach($books as $book){?>
-                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option type="book" name"book" id="book" value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>

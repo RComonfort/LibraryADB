@@ -1,4 +1,6 @@
 <?php
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
     require_once "../models/Loan.php";
     require_once "../models/Book.php";
 	if (empty($_POST['submit'])){
