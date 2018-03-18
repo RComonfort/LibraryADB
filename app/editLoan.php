@@ -36,7 +36,7 @@
         $newLoan->setLoanID($loanID);
         $loan = $newLoan->get();
         $newLoan->checkLoan($loan);
-        $db = new Database;
+        //$db = new Database;
         $book = new Book($db);
         $books = $book->get($loan->loanid);
     ?>
@@ -134,7 +134,7 @@
                             }
                             ?>         
                         </div>
-                        <a class="btn btn-primary" href="<?php echo Book::baseurl() ?>app/addBook.php?loan=<?php echo $loan->loanid ?>">Add book</a> 
+                        <a class="btn btn-primary" href="<?php echo Book::baseurl() ?>app/addBooks.php?loan=<?php echo $loan->loanid ?>">Add book</a> 
                     </div>
                 </div>
             </div>
