@@ -89,11 +89,16 @@
                                 <input type="text" name="loan_date" value="" class="form-control" id="loan_date" placeholder="2018-1-1">
                             </div>
                             <div>
-                                <select type="book" name"book" id="book">
+                                <table class="table">
+                                    <thead class="text-primary">
+                                        <th>Book</th>
+                                    </thead>
+                                    <tbody>
                                     <?php foreach($books as $book){?>
-                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <td><?php echo $book->title ?></td>
                                     <?php } ?>
-                                </select> 
+                                    </tbody>
+                                </table> 
                             </div>
                             <input type="submit" name="submit" class="btn btn-primary" value="Save loan" />
                         </form>
