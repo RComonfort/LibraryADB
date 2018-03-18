@@ -142,7 +142,7 @@ INSERT INTO breturns (loanID, actual_return_date, fineID) VALUES (2, '2018-02-28
 --Adds 7 to the given date, which is the default amount of days that any book is borrowed
 
 CREATE OR REPLACE FUNCTION CalculateReturnDate (loan_date DATE)
-	RETURN DATE AS $return_date$
+	RETURNS DATE AS $return_date$
 	DECLARE
 		return_date DATE;
 	BEGIN
@@ -219,6 +219,8 @@ $fID$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION DeleteLoan(loID INT)
     RETURNS VOID AS $$
     BEGIN
+		DELETE FROM breturns WHERE loanID = loID;
+		DELETE FROM fines WHERE loanID = loID;
         DELETE FROM books_loans WHERE loanID = loID;
 		DELETE FROM loans WHERE loanID = loID;
     END;
@@ -280,15 +282,14 @@ DROP TABLE IF EXISTS clients;
 
 ####### TRUNCATE TABLES  #######
 
-TRUNCATE TABLE IF EXISTS books_loans;
-TRUNCATE TABLE IF EXISTS authors_books;
-TRUNCATE TABLE IF EXISTS books;
-TRUNCATE TYPE IF EXISTS lan;
-TRUNCATE TABLE IF EXISTS authors;
-TRUNCATE TABLE IF EXISTS editorials;
-TRUNCATE TYPE IF EXISTS country;
-TRUNCATE TABLE IF EXISTS breturns;
-TRUNCATE TABLE IF EXISTS fines;
-TRUNCATE TABLE IF EXISTS loans;
-TRUNCATE TABLE IF EXISTS librarians;
-TRUNCATE TABLE IF EXISTS clients;
+
+TRUNCATE TABLE editorials;
+TRUNCATE TABLE books;
+TRUNCATE TABLE authors;
+TRUNCATE TABLE authors_books;
+TRUNCATE TABLE clients;
+TRUNCATE TABLE librarians;
+TRUNCATE TABLE loans;
+TRUNCATE TABLE books_loans;
+TRUNCATE TABLE fines;
+TRUNCATE TABLE breturns;

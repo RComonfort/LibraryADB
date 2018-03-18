@@ -1,5 +1,6 @@
 <?php
 	interface IBook {
-		public function get();
+		public function get($loanID);
+		public function save();
 	}
 ?>

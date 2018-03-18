@@ -44,12 +44,13 @@
 		public function save()
 		{
 			try {
-				$query = $this -> con -> prepare ('INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (?, CURRENT_DATE, CalculateReturnDate(CURRENT_DATE), ?)');
-				$query = bindParam(1, $this -> clientID, PDO::PARAM_INT);
-				$query = bindParam(2, $this -> librarianID, PDO::PARAM_INT);
+				$query = $this -> con -> prepare ('INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, ?, CalculateReturnDate(?), 1) RETURNING loanID as loanID');
+				$query = bindParam(1, $this -> loan_date , PDO::PARAM_INT);
 				$query = execute();
 
 				$this -> con -> close();
+
+				return $query ->fetch(PDO::FETCH_OBJ);
 			}
 			catch (PDOException $e)
 			{

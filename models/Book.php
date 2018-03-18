@@ -14,6 +14,7 @@
 		private $stock;
 		private $pages;
 		private $publishing_date;
+		private $loanID;
 
 		public function __construct (Database $db)
 		{
@@ -22,6 +23,10 @@
 		public function setBookID($bookID)
 		{
 			$this -> bookID = $bookID;
+		}
+		public function setLoanID($bookID)
+		{
+			$this -> loanID = $loanID;
 		}
 		public function setTitle($title)
 		{
@@ -60,23 +65,38 @@
 			$this -> publishing_date = $publishing_date;
 		}
 
-		public function get()
+		public function save()
 		{
 			try {
-				if (is_int($this -> bookID))
+				$query = $this -> con -> prepare ('SELECT LoanBook(?, ?)');
+				$query = bindParam(1, $this -> loanID, PDO::PARAM_INT);
+				$query = bindParam(2, $this -> bookID, PDO::PARAM_INT);
+				$query = execute();
+
+				$this -> con -> close();
+			}
+			catch (PDOException $e)
+			{
+				echo $e -> getMessage();
+			}
+		}
+
+		public function get($loanID)
+		{
+			try {
+				if ($loanID > 0)
 				{
-					$query = $this -> con -> prepare('SELECT * FROM books WHERE bookID = ?');
-					$query -> bindParam (1, $this -> bookID, PDO::PARAM_INT);
+					$query = $this -> con -> prepare('SELECT b.bookID, b.title FROM books b INNER JOIN books_loans bl ON b.bookID = bl.bookID WHERE bl.loanID = ?');
+					$query -> bindParam (1, $loanID, PDO::PARAM_INT);
 					$query -> execute();
 					$this -> con -> close();
 					return $query -> fetch(PDO::FETCH_OBJ);
 				}
-				else
-				{
-					$query + $this -> con -> prepare('SELECT * from books');
-					$query -> execute ();
+				else{
+					$query = $this -> con -> prepare('SELECT bookID, title FROM books');
+					$query -> bindParam (1, $loanID, PDO::PARAM_INT);
+					$query -> execute();
 					$this -> con -> close();
-
 					return $query -> fetchAll(PDO::FETCH_OBJ);
 				}
 			}
@@ -85,6 +105,20 @@
 				echo $e -> getMessage();
 			}
 		}
+
+		public function delete(){
+            try{
+				$query = $this->con->prepare('DELETE FROM books_loans WHERE bookID=? AND loanID=?');
+				$query->bindParam(1, $this->bookID, PDO::PARAM_INT);
+                $query->bindParam(2, $this->loanID, PDO::PARAM_INT);
+                $query->execute();
+                $this->con->close();
+                return true;
+            }
+            catch(PDOException $e){
+                echo  $e->getMessage();
+            }
+        }
 
 		public static function baseurl() {
 			return stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . "/LibraryADB/";

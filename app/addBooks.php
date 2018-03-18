@@ -20,7 +20,6 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 </head>
 
-
 <body>
     <?php
         error_reporting(E_ALL);
@@ -32,13 +31,8 @@
             header("Location:" . Loan::baseurl() . "app/listLoans.php");
         }
         $db = new Database;
-        $newLoan = new Loan($db);
-        $newLoan->setLoanID($loanID);
-        $loan = $newLoan->get();
-        $newLoan->checkLoan($loan);
-        $db = new Database;
-        $book1 = new Book($db);
-        $books = $books->get($loan->loanid);
+        $book = new Book($db);
+        $books = $book->get(0);
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
@@ -92,49 +86,18 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Edit Loan <?php echo $loan->loanid ?></h2>
-                        <form action="<?php echo Loan::baseurl() ?>app/updateLoan.php" method="POST">
-                            <div class="form-group">
-                                <label for="loan_date">Issue date</label>
-                                <input type="text" name="loan_date" value="<?php echo $loan->loan_date ?>" class="form-control" id="loan_date" placeholder="2018-1-1">
+                        <h2 class="text-center text-primary">Make Loan</h2>
+                        <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
+                            <div>
+                                <select type="book" name"book" id="book">
+                                    <?php foreach($books as $book){?>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                    <?php } ?>
+                                </select> 
                             </div>
-                            <div class="form-group">
-                                <label for="return_date">Return date</label>
-                                <input type="return_date" name="return_date" value="<?php echo $loan->return_date ?>" class="form-control" id="return_date" placeholder="2018-1-8">
-                            </div>
-                            <input type="hidden" name="loanID" value="<?php echo $loan->loanid ?>" />
-                            <input type="submit" name="submit" class="btn btn-default" value="Update loan" />
+                            <input type="hidden" name="loanID" value="<?php echo $loanid ?>" />
+                            <input type="submit" name="submit" class="btn btn-primary" value="Save loan" />
                         </form>
-                        <div>
-                            <?php if( ! empty( $loans ) ) {?>
-                                <table class="table">
-                                    <thead class="text-primary">
-                                        <th>Book title</th>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach( $lbooks as $book )
-                                        {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $book->title ?></td>
-                                            <td>
-                                                <a class="btn btn-primary" href="<?php echo Book::baseurl() ?>app/deleteBook.php?bookid=<?php echo $book->bookid ?>&loan=<?php echo $loan->loanid ?>">Delete</a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    <tbody>
-                                </table>
-                            <?php
-                            }
-                            else{ ?>
-                            <div class="alert alert-danger" style="margin-top: 100px">There are 0 books in this loan</div>
-                            <?php
-                            }
-                            ?>         
-                        </div>
-                        <a class="btn btn-primary" href="<?php echo Book::baseurl() ?>app/addBook.php?loan=<?php echo $loan->loanid ?>">Add book</a> 
                     </div>
                 </div>
             </div>
