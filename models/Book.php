@@ -1,6 +1,6 @@
 <?php
 	require_once("../db/Database.php");
-	require_once("../interfaces/IBook.");
+	require_once("../interfaces/IBook.php");
 
 	class Book implements IBook {
 		private $con;

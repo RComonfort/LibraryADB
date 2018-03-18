@@ -13,5 +13,5 @@
         $book->setBookID($bookID);
 		$book->delete();
 	}
-	header("Location:" . Book::baseurl() . "app/slpash.html");
+	header("Location:" . Book::baseurl() . "app/splash.html");
 ?>
