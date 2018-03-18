@@ -95,7 +95,7 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $fine->fineid ?></td>
-                                    <td><?php echo $fine->loan_date ?></td>
+                                    <td><?php echo $fine->loanid ?></td>
                                     <td>$<?php echo $fine->total_amount ?></td>
                                 </tr>
                                 <?php
