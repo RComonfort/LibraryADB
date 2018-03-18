@@ -107,7 +107,7 @@
                             <input type="submit" name="submit" class="btn btn-default" value="Update loan" />
                         </form>
                         <div>
-                            <?php if( ! empty( $loans ) ) {?>
+                            <?php if( ! empty( $books ) ) {?>
                                 <table class="table">
                                     <thead class="text-primary">
                                         <th>Book title</th>

@@ -16,9 +16,12 @@
 	$db = new Database;
 	$loan = new Loan($db);
 	$loan->setLoanDate($post->loan_date);
+	$l = $loan->save();
+	echo $l;
+	die;
 	$book = new Book($db);
 	$book->setLoanBookID($post->book);
-	$book->setLoanLoanID($loan->save());
+	$book->setLoanLoanID($l);
 	$book->save();
 	header("Location:" . Loan::baseurl() . "app/listLoans.php");
 
