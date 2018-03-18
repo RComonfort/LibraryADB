@@ -89,9 +89,9 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
                             <div>
-                                <select type="book" name"book" id="book">
+                                <select>
                                     <?php foreach($books as $book){?>
-                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option type="book" name"book" id="book" value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>

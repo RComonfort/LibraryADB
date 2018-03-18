@@ -24,7 +24,7 @@
 		{
 			$this -> bookID = $bookID;
 		}
-		public function setLoanID($bookID)
+		public function setLoanID($loanID)
 		{
 			$this -> loanID = $loanID;
 		}
