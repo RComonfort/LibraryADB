@@ -71,7 +71,7 @@
 				$query = $this -> con -> prepare ('SELECT LoanBook(?, ?)');
 				$query -> bindParam(1, $this -> loanID, PDO::PARAM_INT);
 				$query -> bindParam(2, $this -> bookID, PDO::PARAM_INT);
-				$query = execute();
+				$query -> execute();
 
 				$this -> con -> close();
 			}
