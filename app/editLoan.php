@@ -37,8 +37,8 @@
         $loan = $newLoan->get();
         $newLoan->checkLoan($loan);
         $db = new Database;
-        $book1 = new Book($db);
-        $books = $books->get($loan->loanid);
+        $book = new Book($db);
+        $books = $book->get($loan->loanid);
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">

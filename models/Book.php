@@ -90,7 +90,7 @@
 					$query -> bindParam (1, $loanID, PDO::PARAM_INT);
 					$query -> execute();
 					$this -> con -> close();
-					return $query -> fetch(PDO::FETCH_OBJ);
+					return $query -> fetchAll(PDO::FETCH_OBJ);
 				}
 				else{
 					$query = $this -> con -> prepare('SELECT bookID, title FROM books');
