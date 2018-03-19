@@ -4,7 +4,7 @@
     require_once "../models/Loan.php";
     require_once "../models/Book.php";
 	if (empty($_POST['submit'])){
-	      header("Location:" . Loan::baseurl() . "app/listLoans.php");
+	      header("Location:" . Loan::baseurl() . "app/splash.php");
 	      exit;
 	}
 
