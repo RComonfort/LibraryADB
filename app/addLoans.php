@@ -83,7 +83,7 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Loan::baseurl() ?>app/saveLoans.php" method="POST">
                             <div class="form-group">
-                                <select for="form-group" name"book" id="book">
+                                <select for="form-group" name="book" id="book">
                                     <?php foreach($books as $book){?>
                                         <option value="<?php echo $book->bookid?>"><?php echo $book->title ?></option>
                                     <?php } ?>
