@@ -178,12 +178,34 @@ BEGIN
 END;
 $total$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION CreateFine(loID INT)
+    RETURNS INT AS $fID$
+    DECLARE
+        fID INT;
+        amount NUMERIC(10,2);
+    BEGIN
+        SELECT CalculateTotalFine(loID) INTO amount;
+        INSERT INTO fines (loanID, total_amount) VALUES (loID, amount) RETURNING fineID INTO fID;
+        RETURN fID;    
+    END;
+$fID$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION DeleteLoan(loID INT)
+    RETURNS VOID AS $$
+    BEGIN
+		DELETE FROM breturns WHERE loanID = loID;
+		DELETE FROM fines WHERE loanID = loID;
+        DELETE FROM books_loans WHERE loanID = loID;
+		DELETE FROM loans WHERE loanID = loID;
+    END;
+$$ LANGUAGE plpgsql;
+
 ####### TRIGGERS  #######
 
 CREATE TRIGGER  after_insert_breturns  AFTER INSERT ON breturns FOR EACH ROW
 EXECUTE PROCEDURE DoFine();
 
-####### STORED PROCEDURES  #######
+####### FUNCTIONS  #######
 
 CREATE OR REPLACE FUNCTION DoFine()
     RETURNS TRIGGER AS $after_insert_breturns$
@@ -206,27 +228,6 @@ CREATE OR REPLACE FUNCTION DoFine()
     END;
 $after_insert_breturns$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION CreateFine(loID INT)
-    RETURNS INT AS $fID$
-    DECLARE
-        fID INT;
-        amount NUMERIC(10,2);
-    BEGIN
-        SELECT CalculateTotalFine(loID) INTO amount;
-        INSERT INTO fines (loanID, total_amount) VALUES (loID, amount) RETURNING fineID INTO fID;
-        RETURN fID;    
-    END;
-$fID$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION DeleteLoan(loID INT)
-    RETURNS VOID AS $$
-    BEGIN
-		DELETE FROM breturns WHERE loanID = loID;
-		DELETE FROM fines WHERE loanID = loID;
-        DELETE FROM books_loans WHERE loanID = loID;
-		DELETE FROM loans WHERE loanID = loID;
-    END;
-$$ LANGUAGE plpgsql;
 
 ####### Transaction  #######
 
