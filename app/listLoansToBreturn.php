@@ -25,8 +25,7 @@
         require_once "../models/Breturn.php";
         $db = new Database;
         $breturn = new Breturn($db);
-        $breturn -> setReturnID(1);
-        $breturns = $breturn->get();        
+        $breturns = $breturn->getLoans();        
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">

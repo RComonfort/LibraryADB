@@ -56,24 +56,27 @@
     	    }
     	}
 
+        public function getLoans(){
+            try{
+                $query = $this->con->prepare('SELECT * FROM loans l WHERE l.loanID NOT IN (SELECT br.loanID FROM breturns br)');
+                $query->execute();
+        		$this->con->close();
+            
+                return $query->fetch(PDO::FETCH_OBJ);
+    		}
+            catch(PDOException $e){
+    	        echo  $e->getMessage();
+    	    }
+        }
+
     	//obtenemos usuarios de una tabla con postgreSql
     	public function get(){
     		try{
-                if(is_int($this->returnID)){
+                $query = $this->con->prepare('SELECT br2.returnID, br2.loanID, br2.fineID, l2.loan_date, br2.actual_return_date as return_date FROM breturns br2 INNER JOIN (SELECT * FROM loans l WHERE l.loanID IN (SELECT br.loanID FROM breturns br)) AS l2 ON br2.loanID = l2.loanID');
+        		$query->execute();
+        		$this->con->close();
                     
-                    $query = $this->con->prepare('SELECT * FROM loans l WHERE l.loanID NOT IN (SELECT br.loanID FROM breturns br)');
-                    $query->execute();
-        			$this->con->close();
-        			return $query->fetch(PDO::FETCH_OBJ);
-                }
-                else{
-                    
-                    $query = $this->con->prepare('SELECT br2.returnID, br2.loanID, br2.fineID, l2.loan_date, br2.actual_return_date as return_date FROM breturns br2 INNER JOIN (SELECT * FROM loans l WHERE l.loanID IN (SELECT br.loanID FROM breturns br)) AS l2 ON br2.loanID = l2.loanID');
-        			$query->execute();
-        			$this->con->close();
-                    
-        			return $query->fetchAll(PDO::FETCH_OBJ);
-                }
+        		return $query->fetchAll(PDO::FETCH_OBJ);
     		}
             catch(PDOException $e){
     	        echo  $e->getMessage();
