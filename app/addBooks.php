@@ -87,13 +87,13 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
                             <div class="form-group">
-                                <select for="form-group" name"book" id="book">
+                                <select for="form-group" name="book" id="book">
                                     <?php foreach($books as $book){?>
                                         <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>
-                            <input type="hidden" name="loanID" value="<?php echo $loanid ?>" />
+                            <input type="hidden" name="loan" value="<?php echo $loanid ?>" />
                             <input type="submit" name="submit" class="btn btn-primary" value="Save loan" />
                         </form>
                     </div>

@@ -8,7 +8,7 @@
 	$bookID = filter_input(INPUT_GET, 'bookid', FILTER_VALIDATE_INT);
 	$loan = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
 	
-	if( $loanID && $loan){
+	if( $bookID && $loan){
         $book->setLoanID($loan);
         $book->setBookID($bookID);
 		$book->delete();

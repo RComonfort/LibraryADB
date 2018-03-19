@@ -89,10 +89,11 @@
 				}
 				else
 				{
-					$query = $this -> con -> prepare ('SELECT l.loanID, l.clientID,l.loan_date,l.return_date,l.librarianID, COUNT(bl.bookID) AS bookCount FROM loans l INNER JOIN books_loans bl ON l.loanID=bl.loanID GROUP BY l.loanID ORDER BY l.loanID;');
+					$query = $this -> con -> prepare ('SELECT l.loanID, l.clientID,l.loan_date,l.return_date,l.librarianID, COUNT(bl.bookID) AS bookCount FROM loans l LEFT JOIN books_loans bl ON l.loanID=bl.loanID GROUP BY l.loanID ORDER BY l.loanID');
 					$query -> execute();
 					$this -> con -> close();
 					return $query -> fetchAll (PDO::FETCH_OBJ);
+					
 				}
 			}
 			catch(PDOException $e){
