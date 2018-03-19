@@ -9,7 +9,6 @@
 	}
 
 	$args = array(
-	    'loan_date'  => FILTER_SANITIZE_STRING,
         'book' => FILTER_SANITIZE_NUMBER_INT
 	);
 
@@ -17,11 +16,9 @@
 
 	$db = new Database;
 	$loan = new Loan($db);
-	$loan->setLoan_date($post->loan_date);
-	$db = new Database;
 	$book = new Book($db);
 	$book->setBookID($post->book);
-	$book->setLoanID($l);
+	$book->setLoanID($loan->save());
 	$book->save();
 	header("Location:" . Loan::baseurl() . "app/listLoans.php");
 

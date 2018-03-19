@@ -83,10 +83,6 @@
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Loan::baseurl() ?>app/saveLoans.php" method="POST">
                             <div class="form-group">
-                                <label for="loan_date">Loan Date</label>
-                                <input type="text" name="loan_date" value="" class="form-control" id="loan_date" placeholder="2018-1-1">
-                            </div>
-                            <div class="form-group">
                                 <select for="form-group" name"book" id="book">
                                     <?php foreach($books as $book){?>
                                         <option value="<?php echo $book->bookid?>"><?php echo $book->title ?></option>
