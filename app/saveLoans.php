@@ -18,7 +18,7 @@
 	$loan = new Loan($db);
 	$book = new Book($db);
 	$book->setBookID($post->book);
-	$book->setLoanID($loan->save());
+	$book->setLoanID($loan->save()->loanid);
 	$book->save();
 	header("Location:" . Loan::baseurl() . "app/listLoans.php");
 
