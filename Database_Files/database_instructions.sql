@@ -193,12 +193,16 @@ CREATE OR REPLACE FUNCTION DoFine()
         new_fineID INT;
     BEGIN
         SELECT loans.return_date INTO return_date_loan FROM loans WHERE loans.loanID = NEW.loanID;
-        IF return_date_loan < NEW.actual_return_date THEN 
+		UPDATE books SET stock = (stock + 1) WHERE bookID IN (SELECT bl.bookID FROM books_loans bl INNER JOIN loans l ON bl.loanID=l.loanID WHERE l.loanID=NEW.loanID);
+        
+		IF return_date_loan < NEW.actual_return_date THEN 
             SELECT CreateFine(NEW.loanID) INTO new_fineID;
             NEW.fineID:=new_fineID;
         ELSE 
             NEW.fineID:=NULL;
         END IF;
+
+		DELETE FROM books_loans WHERE books_loans.loanID=NEW.loanID;
 
         RETURN NEW;
     END;
@@ -264,6 +268,10 @@ FROM clients
 UNION
 SELECT name, address, telephone
 FROM librarians;
+
+SELECT * FROM loans l WHERE l.loanID NOT IN (SELECT br.loanID FROM breturns br);
+
+SELECT br2.returnID, br2.loanID, br2.fineID, l2.loan_date, br2.actual_return_date as return_date FROM breturns br2 INNER JOIN (SELECT * FROM loans l WHERE l.loanID IN (SELECT br.loanID FROM breturns br)) AS l2 ON br2.loanID = l2.loanID;
 
 ####### DROP TABLES  #######
 

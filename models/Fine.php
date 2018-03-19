@@ -55,7 +55,7 @@
     	//obtenemos usuarios de una tabla con postgreSql
     	public function get(){
     		try{
-                if(is_int($this->returnID)){
+                if(is_int($this->fineID)){
                     
                     $query = $this->con->prepare('SELECT * FROM fines WHERE fineID = ?');
                     $query->bindParam(1, $this->fineID, PDO::PARAM_INT);

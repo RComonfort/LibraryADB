@@ -32,9 +32,8 @@
     	//insertamos usuarios en una tabla con postgreSql
     	public function save() {
     		try{
-    			$query = $this->con->prepare('INSERT INTO breturns (returnID, loanID, actual_return_date) values (?,?,CURRENT_DATE)');
-                $query->bindParam(1, $this->returnID, PDO::PARAM_STR);
-    			$query->bindParam(2, $this->loanID, PDO::PARAM_STR);
+    			$query = $this->con->prepare('INSERT INTO breturns (loanID, actual_return_date) values (?,CURRENT_DATE)');
+    			$query->bindParam(1, $this->loanID, PDO::PARAM_STR);
     			$query->execute();
     			$this->con->close();
     		}
@@ -58,11 +57,11 @@
     	}
 
     	//obtenemos usuarios de una tabla con postgreSql
-    	public function get(){
+    	public function get($list){
     		try{
-                if(is_int($this->returnID)){
+                if($list == 1){
                     
-                    $query = $this->con->prepare('SELECT * FROM breturns WHERE returnID = ?');
+                    $query = $this->con->prepare('SELECT * FROM loans l WHERE l.loanID NOT IN (SELECT br.loanID FROM breturns br)');
                     $query->bindParam(1, $this->returnID, PDO::PARAM_INT);
                     $query->execute();
         			$this->con->close();
@@ -70,7 +69,7 @@
                 }
                 else{
                     
-                    $query = $this->con->prepare('SELECT * FROM breturns');
+                    $query = $this->con->prepare('SELECT br2.returnID, br2.loanID, br2.fineID, l2.loan_date, br2.actual_return_date as return_date FROM breturns br2 INNER JOIN (SELECT * FROM loans l WHERE l.loanID IN (SELECT br.loanID FROM breturns br)) AS l2 ON br2.loanID = l2.loanID');
         			$query->execute();
         			$this->con->close();
                     
