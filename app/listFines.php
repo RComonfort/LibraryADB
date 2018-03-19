@@ -44,7 +44,7 @@
                             <p>Home</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="./listLoans.php">
                             <p>Loans</p>
                         </a>
@@ -54,7 +54,7 @@
                             <p>Returns</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./listFines.php">
                             <p>Fines</p>
                         </a>

@@ -44,12 +44,12 @@
                             <p>Home</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="./listLoans.php">
                             <p>Loans</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./listBreturns.php">
                             <p>Returns</p>
                         </a>
@@ -79,7 +79,10 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Fines List</h2>
+                        <h2 class="text-center text-primary">Returns LIst</h2>
+                        <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
+                            <a class="btn btn-info" href="<?php echo Breturn::baseurl() ?>/app/listLoansToBreturn.php">Make a Return</a>
+                        </div>
                         <?php
                             if( ! empty( $breturns ) ) {
                         ?>

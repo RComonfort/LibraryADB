@@ -45,8 +45,8 @@
 		{
 			try {
 				$query = $this -> con -> prepare ('INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, ?, CalculateReturnDate(?), 1) RETURNING loanID as loanID');
-				$query = bindParam(1, $this -> loan_date , PDO::PARAM_INT);
-				$query = execute();
+				$query -> bindParam(1, $this -> loan_date , PDO::PARAM_INT);
+				$query -> execute();
 
 				$this -> con -> close();
 
