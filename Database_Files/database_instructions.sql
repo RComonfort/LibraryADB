@@ -129,9 +129,8 @@ INSERT INTO loans (clientID, loan_date, return_date, librarianID) VALUES (1, '20
 
 INSERT INTO books_loans (bookID, loanID) VALUES (2, 1), (3, 1), (4, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (8,3);
 
-INSERT INTO fines ( loanID, total_amount) VALUES (2, 735.00);
+INSERT INTO breturns (loanID, actual_return_date) VALUES (2, CURRENT_DATE);
 
-INSERT INTO breturns (loanID, actual_return_date, fineID) VALUES (2, '2018-02-28', 1);
 
 ######################################################
 #			          	STORED PROGRAMS				 #
@@ -193,15 +192,14 @@ CREATE OR REPLACE FUNCTION DoFine()
         new_fineID INT;
     BEGIN
         SELECT loans.return_date INTO return_date_loan FROM loans WHERE loans.loanID = NEW.loanID;
-		UPDATE books SET stock = (stock + 1) WHERE bookID IN (SELECT bl.bookID FROM books_loans bl INNER JOIN loans l ON bl.loanID=l.loanID WHERE l.loanID=NEW.loanID);
-        
+		
 		IF return_date_loan < NEW.actual_return_date THEN 
             SELECT CreateFine(NEW.loanID) INTO new_fineID;
-            NEW.fineID:=new_fineID;
+            UPDATE breturns SET fineID = new_fineID WHERE breturns.returnID = NEW.returnID;
         ELSE 
             NEW.fineID:=NULL;
         END IF;
-
+		UPDATE books SET stock = (stock + 1) WHERE bookID IN (SELECT bl.bookID FROM books_loans bl INNER JOIN loans l ON bl.loanID=l.loanID WHERE l.loanID=NEW.loanID);
 		DELETE FROM books_loans WHERE books_loans.loanID=NEW.loanID;
 
         RETURN NEW;

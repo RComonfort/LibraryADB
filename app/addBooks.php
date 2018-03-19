@@ -86,10 +86,10 @@
                     <div class="col-lg-12">
                         <h2 class="text-center text-primary">Make Loan</h2>
                         <form action="<?php echo Book::baseurl() ?>app/saveBooks.php" method="POST">
-                            <div>
-                                <select>
+                            <div class="form-group">
+                                <select for="form-group" name"book" id="book">
                                     <?php foreach($books as $book){?>
-                                        <option type="book" name"book" id="book" value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>

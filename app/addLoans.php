@@ -86,8 +86,8 @@
                                 <label for="loan_date">Loan Date</label>
                                 <input type="text" name="loan_date" value="" class="form-control" id="loan_date" placeholder="2018-1-1">
                             </div>
-                            <div>
-                                <select type="book" name"book" id="book">
+                            <div class="form-group">
+                                <select for="form-group" name"book" id="book">
                                     <?php foreach($books as $book){?>
                                         <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
                                     <?php } ?>
