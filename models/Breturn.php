@@ -62,7 +62,7 @@
                 $query->execute();
         		$this->con->close();
             
-                return $query->fetch(PDO::FETCH_OBJ);
+                return $query->fetchAll(PDO::FETCH_OBJ);
     		}
             catch(PDOException $e){
     	        echo  $e->getMessage();
