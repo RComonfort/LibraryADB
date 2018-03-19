@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS clients CASCADE;
 CREATE TABLE clients(
 	clientID SERIAL,
 	name VARCHAR (150) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE clients(
 	PRIMARY KEY (clientID)
 );
 
-DROP TABLE IF EXISTS librarians;
+DROP TABLE IF EXISTS librarians CASCADE;
 CREATE TABLE librarians(
 	librarianID SERIAL,
 	name VARCHAR (150) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE librarians(
 	PRIMARY KEY (librarianID)
 );
 
-DROP TABLE IF EXISTS loans;
+DROP TABLE IF EXISTS loans CASCADE;
 CREATE TABLE loans(
 	loanID SERIAL,
 	clientID INT REFERENCES clients(clientID) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE loans(
 	PRIMARY KEY (loanID)
 );
 
-DROP TABLE IF EXISTS fines;
+DROP TABLE IF EXISTS fines CASCADE;
 CREATE TABLE fines(
 	fineID SERIAL,
 	loanID INT REFERENCES loans(loanID) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE fines(
 	PRIMARY KEY (fineID)
 );
 
-DROP TABLE IF EXISTS breturns;
+DROP TABLE IF EXISTS breturns CASCADE;
 CREATE TABLE breturns(
 	returnID SERIAL,
 	loanID INT REFERENCES loans(loanID) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE breturns(
 );
 
 
-DROP TYPE IF EXISTS country;
+DROP TYPE IF EXISTS country CASCADE;
 CREATE TYPE country AS ENUM (
   'AUT', --Austria
   'GBR', --Great Britain
@@ -57,7 +57,7 @@ CREATE TYPE country AS ENUM (
   'UKWN' --Unkwown nationality
   );
 
-DROP TABLE IF EXISTS editorials;
+DROP TABLE IF EXISTS editorials CASCADE;
 CREATE TABLE editorials(
 	editorialID SERIAL,
 	name VARCHAR(30) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE editorials(
 );
 
 
-DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS authors CASCADE;
 CREATE TABLE authors(
 	authorID SERIAL,
 	name VARCHAR(150) NOT NULL,
@@ -74,13 +74,13 @@ CREATE TABLE authors(
 	PRIMARY KEY (authorID)
 );
 
-DROP TYPE IF EXISTS lan;
+DROP TYPE IF EXISTS lan CASCADE;
 CREATE TYPE lan AS ENUM (
   'En', 
   'Es', 
   'Fr');
 
-DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS books CASCADE;
 CREATE TABLE books(
 	bookID SERIAL,
 	title VARCHAR(150) NOT NULL,
@@ -95,14 +95,14 @@ CREATE TABLE books(
 	PRIMARY KEY (bookID)
 );
 
-DROP TABLE IF EXISTS authors_books;
+DROP TABLE IF EXISTS authors_books CASCADE;
 CREATE TABLE authors_books(
 	authorID INT REFERENCES authors(authorID),
 	bookID INT REFERENCES books(bookID),
 	PRIMARY KEY (authorID, bookID)
 );
 
-DROP TABLE IF EXISTS books_loans;
+DROP TABLE IF EXISTS books_loans CASCADE;
 CREATE TABLE books_loans(
 	bookID INT REFERENCES books(bookID),
 	loanID INT REFERENCES loans(loanID),

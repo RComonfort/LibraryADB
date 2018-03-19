@@ -81,7 +81,7 @@
                     <div class="col-lg-12">
                         <h2 class="text-center text-primary">Loans List</h2>
                         <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
-                            <a class="btn btn-info" href="<?php echo Loan::baseurl() ?>/app/addLoans.php">Add loan</a>
+                            <a class="btn btn-info" href="<?php echo Loan::baseurl() ?>app/addLoans.php">Add loan</a>
                         </div>
                         <?php
                             if( ! empty( $loans ) ) {
