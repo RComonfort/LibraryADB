@@ -62,7 +62,6 @@
                 if(is_int($this->returnID)){
                     
                     $query = $this->con->prepare('SELECT * FROM loans l WHERE l.loanID NOT IN (SELECT br.loanID FROM breturns br)');
-                    $query->bindParam(1, $this->returnID, PDO::PARAM_INT);
                     $query->execute();
         			$this->con->close();
         			return $query->fetch(PDO::FETCH_OBJ);
