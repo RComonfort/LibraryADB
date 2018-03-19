@@ -25,7 +25,8 @@
         require_once "../models/Breturn.php";
         $db = new Database;
         $breturn = new Breturn($db);
-        $breturn -> setReturnID(1);
+        $i = 1;
+        $breturn -> setReturnID($i);
         $breturns = $breturn->get();        
     ?>
     <div class="wrapper">

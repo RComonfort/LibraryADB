@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 <select for="form-group" name="book" id="book">
                                     <?php foreach($books as $book){?>
-                                        <option value="<?php echo $book->bookID?>"><?php echo $book->id ?>-<?php echo $loan ?></option>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->bookID ?>-<?php echo $loan ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>
