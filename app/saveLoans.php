@@ -17,9 +17,6 @@
 	$db = new Database;
 	$loan = new Loan($db);
 	$l = $loan->save()->loanid;
-	echo $l;
-	echo $post->book;
-	die;
 	$db = new Database;
 	$book = new Book($db);
 	$book->setBookID($post->book);
