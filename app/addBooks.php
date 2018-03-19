@@ -24,8 +24,8 @@
         ini_set('display_errors', 1);
         require_once "../models/Loan.php";
         require_once "../models/Book.php";
-        $loanID = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
-        if( ! $loanID ){
+        $loan = filter_input(INPUT_GET, 'loan', FILTER_VALIDATE_INT);
+        if( ! $loan ){
             header("Location:" . Loan::baseurl() . "app/listLoans.php");
         }
         $db = new Database;
@@ -89,11 +89,11 @@
                             <div class="form-group">
                                 <select for="form-group" name="book" id="book">
                                     <?php foreach($books as $book){?>
-                                        <option value="<?php echo $book->bookID?>"><?php echo $book->title ?></option>
+                                        <option value="<?php echo $book->bookID?>"><?php echo $book->id ?>-<?php echo $loan ?></option>
                                     <?php } ?>
                                 </select> 
                             </div>
-                            <input type="hidden" name="loan" value="<?php echo $loanid ?>" />
+                            <input type="hidden" name="loan" value="<?php echo $loan ?>" />
                             <input type="submit" name="submit" class="btn btn-primary" value="Save loan" />
                         </form>
                     </div>
