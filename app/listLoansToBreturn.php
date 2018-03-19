@@ -88,7 +88,6 @@
                                 <th>Loan Id</th>
                                 <th>Loan Date</th>
                                 <th>Client Id</th>
-                                <th>Number of books</th>
                                 <th>Return date</th>
                             </thead>
                             <tbody>
@@ -101,7 +100,7 @@
                                     <td><?php echo $loan->clientid ?></td>
                                     <td><?php echo $loan->return_date ?></td>
                                     <td>
-                                        <a class="btn btn-primary" href="<?php echo Breturn::baseurl() ?>app/saveBretuns.php?loan=<?php echo $loan->loanid ?>">Return</a> 
+                                        <a class="btn btn-primary" href="<?php echo Breturn::baseurl() ?>app/saveBreturns.php?loan=<?php echo $loan->loanid ?>">Return</a> 
                                     </td>
                                 </tr>
                                 <?php
