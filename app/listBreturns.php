@@ -25,7 +25,7 @@
         require_once "../models/Breturn.php";
         $db = new Database;
         $breturn = new Breturn($db);
-        $breturns = $breturn->get(0);        
+        $breturns = $breturn->get();        
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
@@ -79,7 +79,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Returns LIst</h2>
+                        <h2 class="text-center text-primary">Returns List</h2>
                         <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
                             <a class="btn btn-info" href="<?php echo Breturn::baseurl() ?>/app/listLoansToBreturn.php">Make a Return</a>
                         </div>

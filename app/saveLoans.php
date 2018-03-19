@@ -19,6 +19,7 @@
 	$loan = new Loan($db);
 	$loan->setLoan_date($post->loan_date);
 	$l = $loan->save();
+	$db = new Database;
 	$book = new Book($db);
 	$book->setBookID($post->book);
 	$book->setLoanID($l);

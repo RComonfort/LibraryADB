@@ -25,7 +25,8 @@
         require_once "../models/Breturn.php";
         $db = new Database;
         $breturn = new Breturn($db);
-        $breturns = $breturn->get(1);        
+        $breturn -> setReturnID(1);
+        $breturns = $breturn->get();        
     ?>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
@@ -44,12 +45,12 @@
                             <p>Home</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="./listLoans.php">
                             <p>Loans</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./listBreturns.php">
                             <p>Returns</p>
                         </a>
@@ -79,7 +80,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="col-lg-12">
-                        <h2 class="text-center text-primary">Fines List</h2>
+                        <h2 class="text-center text-primary">Loans List</h2>
                         <?php
                             if( ! empty( $breturns ) ) {
                         ?>
