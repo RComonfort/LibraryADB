@@ -19,6 +19,8 @@
 	$loan = new Loan($db);
 	$loan->setLoan_date($post->loan_date);
 	$l = $loan->save();
+	echo $l;
+	die;
 	$db = new Database;
 	$book = new Book($db);
 	$book->setBookID($post->book);

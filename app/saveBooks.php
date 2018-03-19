@@ -14,6 +14,9 @@
 	);
 
 	$post = (object)filter_input_array(INPUT_POST, $args);
+	echo $post->book;
+	echo $post->loan;
+	die;
 	$db = new Database;
 	$book = new Book($db);
 	$book->setBookID($post->book);
